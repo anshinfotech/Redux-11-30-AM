@@ -1,0 +1,83 @@
+import React from "react";
+import { useState } from "react";
+
+const App = () => {
+  const [username, setUsername] = useState("");
+
+  const [email, setEmail] = useState("");
+
+  const [form1, setForm1] = useState(true);
+
+  function changeForm() {
+    setForm1(!form1);
+  }
+
+  function showOutput(e) {
+    e.preventDefault();
+    console.log(username);
+    console.log(email);
+  }
+
+  return (
+    <>
+      <button onClick={changeForm}>Change Form</button>
+
+      {form1 ? (
+        <form>
+          <fieldset>
+            <legend>
+              <h1>Signup form</h1>
+            </legend>
+            <label htmlFor="name">Name:-</label>
+            <input
+              type="text"
+              id="name"
+              placeholder="Enter your name"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+
+            <br />
+            <br />
+            <label htmlFor="email">Email:-</label>
+            <input
+              type="email"
+              id="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+
+            <br />
+            <br />
+            <input type="submit" value="Submit" onClick={showOutput} />
+          </fieldset>
+        </form>
+      ) : (
+        <form>
+          <fieldset>
+            <legend>
+              <h1>Login form</h1>
+            </legend>
+            <br />
+            <br />
+            <label htmlFor="email">Email:-</label>
+            <input
+              type="email"
+              id="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+
+            <br />
+            <br />
+            <input type="submit" value="Submit" onClick={showOutput} />
+          </fieldset>
+        </form>
+      )}
+    </>
+  );
+};
+
+export default App;
