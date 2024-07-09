@@ -4,17 +4,18 @@ import Navbar from "./Components/Navbar";
 import About from "./Components/About";
 import Products from "./Components/Products";
 import Services from "./Components/Services";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
 import Errorpage from "./Components/Errorpage";
 import Home from "./Components/Home";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProducts } from "./Actions/fetchProductAction";
+import { fetchCart, fetchProducts } from "./Actions/fetchProductAction";
 
 const App = () => {
   const products = useSelector((state) => state.prd.products);
   const error = useSelector((state) => state.prd.error);
   const isLoading = useSelector((state) => state.prd.loading);
   const message = useSelector((state) => state.prd.message);
+  const cart = useSelector((state) => state.prd.cart);
   console.log("PRODUCTS", products);
   console.log("ERROR", error);
   console.log("LOADING", isLoading);
@@ -38,12 +39,41 @@ const App = () => {
     //     <Route path="*" element={<Errorpage/>}></Route>
     //   </Routes>
     // </BrowserRouter>
+
     <>
+    <Link to="/cart">Go to Cart Page {cart.length}</Link>
+    <div className="d-flex justify-content-center align-items-center flex-wrap">
       {products.length > 0 &&
         products.map((e) => {
-          return <h1>{e.title}</h1>;
+          return (
+            <div key={e.id}>
+              <div className="card" style={{ width: "18rem" }}>
+                <img src={e.thumbnail} className="card-img-top" alt="..." />
+                <div className="card-body">
+                  <h5 className="card-title">{e.title}</h5>
+                  <p className="card-text">{e.description}</p>
+                  <a href="#" className="btn btn-primary">
+                    {e.price}
+                  </a>
+                  <a
+                    href="#"
+                    className="btn btn-warning"
+                    onClick={() =>{
+                      console.log("ADDED TO CART");
+                      dispatch(fetchCart(e))
+                    }}
+                  >
+                    Add to Cart
+                  </a>
+                </div>
+              </div>
+            </div>
+          );
         })}
+    </div>
     </>
+
+    
   );
 };
 
