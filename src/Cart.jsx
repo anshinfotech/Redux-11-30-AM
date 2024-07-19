@@ -11,6 +11,7 @@ const Cart = () => {
             return(
                 <h1>{item.title}</h1>
             )
+            
         })}
     </div>
   )
